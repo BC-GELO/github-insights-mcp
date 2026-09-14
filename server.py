@@ -80,10 +80,10 @@ async def get_repo_stats(repo_name: str) -> str:
         str: Markdown con estadísticas, commits, contribuidores y issues del repositorio.
     """
     try:
-        stats = await github_get(f"/repos/{owner}/{repo}")
-        commits_per_page = await github_get(f"/repos/{owner}/{repo}/commits?per_page=1")
-        contibutors = await github_get(f"/repos/{owner}/{repo}/contributors")
-        issues = await github_get(f"/repos/{owner}/{repo}/issues", params={"state": "all"})
+        stats = await github_get(f"/repos/{GITHUB_USERNAME}/{repo_name}")
+        commits_per_page = await github_get(f"/repos/{GITHUB_USERNAME}/{repo_name}/commits?per_page=1")
+        contibutors = await github_get(f"/repos/{GITHUB_USERNAME}/{repo_name}/contributors")
+        issues = await github_get(f"/repos/{GITHUB_USERNAME}/{repo_name}/issues", params={"state": "all"})
 
     except Exception as e:
         return format_github_error(e)
@@ -111,8 +111,17 @@ async def get_repo_stats(repo_name: str) -> str:
     }
 )
 async def get_recent_activity(days: int) -> str:
+    """Resume la actividad reciente (commits vía push) del usuario en todos sus repos.
+ 
+    Args:
+        params (RecentActivityInput): days (int) - ventana de días a revisar.
+ 
+    Returns:
+        str: Markdown con los commits recientes agrupados por repo, dentro
+        de la ventana de días indicada.
+    """
     try:
-        activity = await github_get(f"/users/{username}/events/public", params={"push_events": "true", "per_page": 100})
+        activity = await github_get(f"/users/{GITHUB_USERNAME}/events/public", params={"push_events": "true", "per_page": 100})
     except Exception as e:
         return format_github_error(e)
 
@@ -137,8 +146,16 @@ async def get_recent_activity(days: int) -> str:
     }
 )
 async def search_commits(repo_name: str, keyword: str) -> str:
+    """Busca commits que contengan una palabra clave dentro de un repositorio.
+ 
+    Args:
+        params (SearchCommitsInput): repo_name (str), keyword (str).
+ 
+    Returns:
+        str: Markdown con los commits que coinciden, su mensaje y fecha.
+    """
     try:
-        commits = await github_get(f"/search/commits?q={keyword}+repo:{owner}/{repo}", headers={"Accept": "application/vnd.github.cloak-preview"})
+        commits = await github_get(f"/search/commits?q={keyword}+repo:{GITHUB_USERNAME}/{repo_name}", headers={"Accept": "application/vnd.github.cloak-preview"})
     except Exception as e:
         return format_github_error(e)
 

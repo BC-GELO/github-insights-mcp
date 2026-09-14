@@ -1,0 +1,4 @@
+httpx 
+python-dotenv
+mcp[cli]<2
+pydantic

@@ -1,4 +1,4 @@
-httpx 
-python-dotenv
-mcp[cli]<2
-pydantic
+httpx>=0.27,<1
+mcp[cli]>=1.30,<2
+pydantic>=2.5,<3
+python-dotenv>=1.0,<2

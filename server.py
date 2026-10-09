@@ -65,7 +65,7 @@ def _first_line(message: str | None) -> str:
     lines = (message or "").strip().splitlines()
     line = lines[0].strip() if lines else "(sin mensaje)"
     if len(line) > MAX_MESSAGE_CHARS:
-        line = line[: MAX_MESSAGE_CHARS - 1] + "…"
+        line = line[: MAX_MESSAGE_CHARS - 3] + "..."
     return line
 
 
@@ -119,8 +119,8 @@ async def list_repos(params: ListReposInput) -> str:
     lines = [f"## Repositorios de {username}\n"]
     for repo in repos:
         lines.append(
-            f"- **{repo['name']}** — {repo.get('language') or 'N/A'} · "
-            f"⭐ {repo['stargazers_count']} · actualizado {repo['updated_at'][:10]}"
+            f"- **{repo['name']}** - {repo.get('language') or 'N/A'} | "
+            f"stars {repo['stargazers_count']} | actualizado {repo['updated_at'][:10]}"
         )
     return "\n".join(lines)
 

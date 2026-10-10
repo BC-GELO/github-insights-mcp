@@ -58,8 +58,8 @@ async def test_list_repos_formats_and_requests_correctly(gh):
     )
     out = await server.list_repos(server.ListReposInput(limit=2))
     assert "## Repositorios de octo" in out
-    assert "- **app** — Python · ⭐ 3 · actualizado 2026-09-01" in out
-    assert "- **notes** — N/A · ⭐ 0 · actualizado 2026-08-15" in out
+    assert "- **app** - Python | stars 3 | actualizado 2026-09-01" in out
+    assert "- **notes** - N/A | stars 0 | actualizado 2026-08-15" in out
     params = route.calls[0].request.url.params
     assert params["per_page"] == "2" and params["sort"] == "updated"
 

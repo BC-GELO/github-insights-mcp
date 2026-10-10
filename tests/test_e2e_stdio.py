@@ -100,7 +100,7 @@ async def test_all_four_tools_over_real_stdio(fake_github):
 
             repos = _text(await session.call_tool(
                 "github_list_repos", {"params": {"limit": 5}}))
-            assert "- **demo** — Python · ⭐ 4" in repos
+            assert "- **demo** - Python | stars 4" in repos
 
             stats = _text(await session.call_tool(
                 "github_get_repo_stats", {"params": {"repo_name": "demo"}}))
